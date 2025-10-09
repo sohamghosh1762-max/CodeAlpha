@@ -1,0 +1,15 @@
+import pandas as pd
+import numpy as np
+from datetime import datetime
+
+start_date = datetime(2015, 1, 1)
+months = 120  # 10 years monthly data
+
+dates = pd.date_range(start=start_date, periods=months, freq='MS')
+
+# Trend + seasonal pattern + noise
+bills = 1000 + np.linspace(0, 500, months) + 100*np.sin(np.linspace(0, 10*np.pi, months)) + np.random.randint(-50, 50, months)
+
+df = pd.DataFrame({"date": dates, "bill": np.round(bills, 2)})
+df.to_csv("long_electricity_bills.csv", index=False)
+print(df.head())
